@@ -6,7 +6,7 @@ import LoginPage from "./pages/LoginPage";
 
 const App = () => {
   return (
-    <div>
+    <div className="bg-primary-light/30 bg-contain">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
