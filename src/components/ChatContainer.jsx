@@ -71,17 +71,34 @@ const ChatContainer = ({ selectedChat, setSelectedChat }) => {
 
       {/* bottom area */}
       <div className="absolute bottom-0 left-0 right-0 p-3 flex items-center bg-primary-light/5 ">
-        <div className="flex-1 flex items-center bg-white rounded-full px-3 py-2 shadow-md">
-          <input type="text" placeholder="Write a message" />
-          <input type="file" id="image" accept="image/png image/jpeg" hidden />
-          <label htmlFor="image">
-            <img
-              src={assets.gallery_icon}
-              alt=""
-              className="w-5 mr-2 cursor-pointer"
+        <div className="w-full flex justify-between items-center gap-1 bg-white rounded-full px-3 py-2 shadow-md">
+          <input
+            type="text"
+            placeholder="Write a message"
+            className="outline-none"
+          />
+          <div className="flex items-center gap-2">
+            <input
+              type="file"
+              id="image"
+              accept="image/png ,image/jpeg"
+              hidden
             />
-          </label>
-          <img src={assets.send_button} alt="" className="w-7 cursor-pointer" />
+            <label htmlFor="image">
+              <div className="w-6 bg-primary-dark rounded-full p-1.5">
+                <img
+                  src={assets.gallery_icon}
+                  alt=""
+                  className="cursor-pointer"
+                />
+              </div>
+            </label>
+            <img
+              src={assets.send_button}
+              alt=""
+              className="w-6 cursor-pointer"
+            />
+          </div>
         </div>
       </div>
     </div>
