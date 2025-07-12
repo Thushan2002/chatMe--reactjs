@@ -85,7 +85,7 @@ const ChatContainer = ({ selectedChat, setSelectedChat }) => {
               hidden
             />
             <label htmlFor="image">
-              <div className="w-6 bg-primary-dark rounded-full p-1.5">
+              <div className="w-6 bg-gradient-to-r from-purple-400 to-violet-600 rounded-full p-1.5">
                 <img
                   src={assets.gallery_icon}
                   alt=""
