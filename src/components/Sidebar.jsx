@@ -6,68 +6,71 @@ const Sidebar = ({ selectedChat, setSelectedChat }) => {
   const navigate = useNavigate();
   return (
     <div
-      className={`bg-primary-dark/10 h-full p-5 rounded-r-xl overflow-y-scroll text-white ${
+      className={`bg-gradient-to-b from-gray-800 to-black h-full text-white p-5 ${
         selectedChat ? "max-md:hidden" : ""
       }`}>
-      <div className="pb-5">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-primary-dark">
-            Chat<span className="text-primary-light">Me</span>
-          </h1>
-          <div className="relative py-2 group">
-            <img
-              src={assets.menu_icon}
-              alt="menu"
-              className="max-h-5 cursor-pointer"
-            />
-            <div className="absolute right-0 top-full z-20 bg-primary-light/90 backdrop-blur-md rounded-lg shadow-lg w-[100px] p-4 hidden group-hover:block ">
-              <p
-                onClick={() => navigate("/profile")}
-                className="cursor-pointer text-sm">
-                Edit Profile
-              </p>
-              <hr className="my-2 border-t border-white" />
-              <p className="cursor-pointer text-sm">Logout</p>
-            </div>
-          </div>
-        </div>
-        {/* search chats */}
-        <div className="bg-primary-light/40 rounded-full flex items-center gap-2 px-3 py-2 mt-4">
-          <img src={assets.search_icon} alt="search" className="w-3" />
-          <input
-            type="text"
-            className="bg-transparent border-none outline-none text-white text-xs placeholder:text-white/50 flex-1"
-            placeholder="Search Chats"
+      {/* Header */}
+      <div className="flex justify-between items-center mb-5">
+        <h1 className="text-2xl font-bold">
+          Chat<span className="text-indigo-400">Me</span>
+        </h1>
+        <div className="relative group">
+          <img
+            src={assets.menu_icon}
+            alt="menu"
+            className="w-5 cursor-pointer"
           />
+          <div className="absolute right-0 top-full mt-2 bg-white/10 backdrop-blur-md rounded shadow-lg w-32 p-2 hidden group-hover:block">
+            <p
+              onClick={() => navigate("/profile")}
+              className="cursor-pointer text-sm hover:text-indigo-300">
+              Edit Profile
+            </p>
+            <hr className="my-2 border-gray-600" />
+            <p className="cursor-pointer text-sm hover:text-indigo-300">
+              Logout
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* show chats */}
-      <div className="flex flex-col">
+      {/* Search */}
+      <div className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-2 mb-4">
+        <img src={assets.search_icon} alt="search" className="w-3" />
+        <input
+          type="text"
+          placeholder="Search chats"
+          className="bg-transparent outline-none text-sm placeholder-white/50 w-full"
+        />
+      </div>
+
+      {/* Chat List */}
+      <div className="space-y-3">
         {userDummyData.map((user, index) => (
           <div
-            key={index}
+            key={user._id}
             onClick={() => setSelectedChat(user)}
-            className={`relative flex items-center gap-2 p-2 rounded-lg hover:bg-primary-light/10 cursor-pointer ${
-              selectedChat?._id === user._id ? "bg-primary-light/10" : ""
+            className={`flex items-center gap-3 p-2 border-b border-white/10 rounded-lg cursor-pointer hover:bg-white/10 ${
+              selectedChat?._id === user._id ? "bg-white/10" : ""
             }`}>
             <img
-              src={user?.profilePic || assets.avatar_icon}
-              alt="user"
-              className="w-10 h-10 rounded-full mb-2"
+              src={user.profilePic || assets.avatar_icon}
+              alt="avatar"
+              className="w-10 h-10 rounded-full"
             />
-            <div className="flex flex-col leading-5">
-              <p>{user.fullName}</p>
-              {index < 3 ? (
-                <span className="text-xs text-secondary-light">Online</span>
-              ) : (
-                <span className="text-xs text-primary-light">Offline</span>
-              )}
+            <div className="flex flex-col text-sm">
+              <p className="font-medium">{user.fullName}</p>
+              <span
+                className={`${
+                  index < 3 ? "text-green-400" : "text-gray-400"
+                } text-xs`}>
+                {index < 3 ? "Online" : "Offline"}
+              </span>
             </div>
             {index > 2 && (
-              <p className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center  items-center rounded-full bg-primary-dark">
+              <div className="ml-auto w-5 h-5 bg-indigo-600 text-xs flex items-center justify-center rounded-full">
                 {index}
-              </p>
+              </div>
             )}
           </div>
         ))}
