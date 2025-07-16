@@ -4,38 +4,40 @@ import assets, { imagesDummyData } from "../assets/assets";
 const RightSidebar = ({ selectedChat }) => {
   return (
     selectedChat && (
-      <div
-        className={`bg-primary/20 text-white w-full relative overflow-y-scroll ${
-          selectedChat ? "max-md:hidden" : " "
-        }`}>
-        <div className="pt-16 flex flex-col items-center gap-2 text-xs font-light mx-auto">
+      <div className="bg-gradient-to-bl from-gray-900 to-black text-white w-full max-md:hidden p-4 overflow-y-auto">
+        <div className="flex flex-col items-center gap-3">
           <img
             src={selectedChat?.profilePic || assets.avatar_icon}
-            alt=""
-            className="w-20 aspect-[1/1] rounded-full"
+            className="w-20 h-20 rounded-full"
+            alt="profile"
           />
-          <h1 className="px-10 text-xl font-medium mx-auto flex items-center gap-2">
-            <p className="w-2 h-2 rounded-full bg-green-500"></p>
+          <h2 className="text-xl font-medium flex items-center gap-2">
+            <span className="w-2 h-2 bg-green-400 rounded-full"></span>
             {selectedChat.fullName}
-          </h1>
-          <p className="px-10 mx-auto">{selectedChat.bio}</p>
+          </h2>
+          <p className="text-sm text-gray-400 text-center px-4">
+            {selectedChat.bio}
+          </p>
         </div>
-        <hr className="border-primary my-4" />
-        <div className="px-5 text-xs">
-          <p className="text-primary-dark text-lg">Media</p>
-          <div className="mt-2 max-h-[200px] overflow-y-scroll grid grid-cols-2 gap-4 opacity-80">
-            {imagesDummyData.map((img, index) => (
-              <div
-                key={index}
-                onClick={() => window.open(img)}
-                className="cursor-pointer rounded">
-                <img src={img} alt="" className="h-full rounded-md" />
-              </div>
+
+        <hr className="my-6 border-gray-700" />
+
+        <div>
+          <h3 className="text-indigo-300 text-lg mb-3">Shared Media</h3>
+          <div className="grid grid-cols-2 gap-3 max-h-[200px] overflow-y-scroll pr-1">
+            {imagesDummyData.map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                alt="shared"
+                className="rounded-lg cursor-pointer hover:opacity-80"
+                onClick={() => window.open(img, "_blank")}
+              />
             ))}
           </div>
         </div>
 
-        <button className="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-400 to-violet-600 text-white border-none text-sm font-light py-2 px-20 rounded-full cursor-pointer">
+        <button className="mt-10 mx-auto block bg-gradient-to-r from-purple-500 to-indigo-600 py-2 px-6 rounded-full text-sm">
           Logout
         </button>
       </div>
