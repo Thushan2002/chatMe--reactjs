@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import assets, { userDummyData } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ selectedChat, setSelectedChat }) => {
   const navigate = useNavigate();
+  const [openProfile, setOpenProfile] = useState(false);
+  const profileRef = useRef();
+
   return (
     <div
       className={`bg-gradient-to-b from-gray-800 to-black h-full text-white p-5 ${
@@ -16,21 +19,26 @@ const Sidebar = ({ selectedChat, setSelectedChat }) => {
         </h1>
         <div className="relative group">
           <img
+            onClick={() => setOpenProfile((prev) => !prev)}
             src={assets.menu_icon}
             alt="menu"
             className="w-5 cursor-pointer"
           />
-          <div className="absolute right-0 top-full mt-2 bg-white/10 backdrop-blur-md rounded shadow-lg w-32 p-2 hidden group-hover:block">
-            <p
-              onClick={() => navigate("/profile")}
-              className="cursor-pointer text-sm hover:text-indigo-300">
-              Edit Profile
-            </p>
-            <hr className="my-2 border-gray-600" />
-            <p className="cursor-pointer text-sm hover:text-indigo-300">
-              Logout
-            </p>
-          </div>
+          {openProfile && (
+            <div
+              ref={profileRef}
+              className="absolute right-0 top-full mt-2 bg-white/10 backdrop-blur-md rounded shadow-lg w-32 p-2">
+              <p
+                onClick={() => navigate("/profile")}
+                className="cursor-pointer text-sm hover:text-indigo-300">
+                Edit Profile
+              </p>
+              <hr className="my-2 border-gray-600" />
+              <p className="cursor-pointer text-sm hover:text-indigo-300">
+                Logout
+              </p>
+            </div>
+          )}
         </div>
       </div>
 

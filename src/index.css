@@ -2,7 +2,7 @@
 
 @import "tailwindcss";
 
-@theme {
+/* @theme {
     --color-primary: #4F46E5;
     --color-primary-light: #6366F1;
     --color-primary-dark: #3730A3;
@@ -10,7 +10,7 @@
     --color-secondary: #10B981;
     --color-secondary-light: #34D399;
     --color-secondary-dark: #059669;
-}
+} */
 
 * {
     font-family: "Outfit", sans-serif;

@@ -6,7 +6,7 @@ import LoginPage from "./pages/LoginPage";
 
 const App = () => {
   return (
-    <div className="bg-primary-light/30">
+    <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-black text-white">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
