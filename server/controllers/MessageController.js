@@ -69,7 +69,7 @@ export const markMessageAsSeen = async (req, res) => {
 
 // send messages for selected user
 
-export default sendMessages = async (req, res) => {
+export const sendMessages = async (req, res) => {
     try {
         const { text, image } = req.body
         const { senderId } = req.params.id
@@ -87,6 +87,11 @@ export default sendMessages = async (req, res) => {
             image: imageUrl,
             text
         })
+        // emit the new message to the receiver's socket
+        const receiverSocketId = userSocketMap[receiverId]
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("newMessage", newMessage)
+        }
 
         res.json({ success: true, newMessage })
 
