@@ -1,3 +1,4 @@
+import cloudinary from "../lib/cloudinary.js"
 import generateToken from "../lib/util.js"
 import User from "../models/UserModel.js"
 import bcrypt from "bcryptjs"
@@ -56,3 +57,30 @@ export const logIn = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" })
     }
 }
+
+// check user authenticated ?
+
+export const checkAuth = (req, res) => {
+    res.json({ success: true, user: req.user })
+}
+
+// update profile 
+export const updateProfile = async (req, res) => {
+    try {
+        const { profilePic, bio, fullName } = req.body
+        const userId = req.user._id
+        let updatedUser
+
+        if (!profilePic) {
+            updatedUser = await User.findByIdAndUpdate(userId, { bio, fullName }, { new: true })
+        } else {
+            const upload = await cloudinary.uploader.upload(profilePic)
+            updatedUser = await User.findByIdAndUpdate(userId, { profilePic: upload.secure_url, bio, fullName }, { new: true })
+        }
+        return res.json({ success: true, user: updatedUser, message: "Profile Updated" })
+    } catch (error) {
+        console.log(`Error in Profile Update Controller ${error}`);
+        res.status(500).json({ error: "Internal Server Error" })
+    }
+}
+
