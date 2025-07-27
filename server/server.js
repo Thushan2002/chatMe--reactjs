@@ -3,6 +3,7 @@ import cors from "cors"
 import http from "http"
 import dotenv from "dotenv"
 import connectDB from "./lib/db.js"
+import userRouter from "./routes/UserRoute.js"
 
 dotenv.config()
 
@@ -20,8 +21,11 @@ app.use("/api/status", (req, res) => {
 })
 
 // start server
-
 const PORT = process.env.PORT || 5000
+
+// system Routes
+
+app.use("/api/auth", userRouter)
 
 server.listen(PORT, () => {
     console.log("Server is Running on PORT", PORT)
