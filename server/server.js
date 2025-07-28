@@ -6,7 +6,6 @@ import connectDB from "./lib/db.js"
 import userRouter from "./routes/UserRoute.js"
 import messageRouter from "./routes/MesssageRoute.js"
 import { Server } from "socket.io"
-import { Socket } from "net"
 
 dotenv.config()
 
