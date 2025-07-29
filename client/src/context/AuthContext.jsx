@@ -9,7 +9,7 @@ axios.defaults.baseURL = backendUrl;
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ Children }) => {
+export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [authUser, setAuthUser] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -109,5 +109,5 @@ export const AuthProvider = ({ Children }) => {
     updateProfile,
   };
 
-  return <AuthContext.Provider value={value}>{Children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
