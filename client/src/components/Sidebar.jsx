@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import assets, { userDummyData } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const Sidebar = ({ selectedChat, setSelectedChat }) => {
+  const { logoutUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [openProfile, setOpenProfile] = useState(false);
   const profileRef = useRef();
@@ -34,7 +37,9 @@ const Sidebar = ({ selectedChat, setSelectedChat }) => {
                 Edit Profile
               </p>
               <hr className="my-2 border-gray-600" />
-              <p className="cursor-pointer text-sm hover:text-indigo-300">
+              <p
+                onClick={() => logoutUser()}
+                className="cursor-pointer text-sm hover:text-indigo-300">
                 Logout
               </p>
             </div>

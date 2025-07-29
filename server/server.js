@@ -8,13 +8,14 @@ import messageRouter from "./routes/MesssageRoute.js"
 import { Server } from "socket.io"
 
 dotenv.config()
-console.log("CLOUDINARY_API_KEY:", process.env.CLOUDINARY_API_KEY);
-console.log("CLOUDINARY_NAME:", process.env.CLOUDINARY_NAME);
-console.log("CLOUDINARY_SECRET:", process.env.CLOUDINARY_SECRET);
 
 // create express app and http server
 const app = express()
 const server = http.createServer(app)
+
+// middleware setup 
+app.use(express.json({ limit: "20mb" }))
+app.use(cors({ origin: "http://localhost:5173", credentials: true }))
 
 // initialise socket.io server
 
@@ -43,10 +44,6 @@ io.on("connection", (socket) => {
     })
 
 })
-
-// middleware setup 
-app.use(express.json({ limit: "4mb" }))
-app.use(cors())
 
 // Test Route
 app.use("/api/status", (req, res) => {
