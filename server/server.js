@@ -8,6 +8,9 @@ import messageRouter from "./routes/MesssageRoute.js"
 import { Server } from "socket.io"
 
 dotenv.config()
+console.log("CLOUDINARY_API_KEY:", process.env.CLOUDINARY_API_KEY);
+console.log("CLOUDINARY_NAME:", process.env.CLOUDINARY_NAME);
+console.log("CLOUDINARY_SECRET:", process.env.CLOUDINARY_SECRET);
 
 // create express app and http server
 const app = express()
