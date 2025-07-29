@@ -40,7 +40,7 @@ export const signUp = async (req, res) => {
 export const logIn = async (req, res) => {
     const { email, password } = req.body
     try {
-        const existingUser = await User.findOne({ email }).select("-password")
+        const existingUser = await User.findOne({ email })
         if (!existingUser) {
             res.json({ success: false, message: "User doesn't exists" })
         }

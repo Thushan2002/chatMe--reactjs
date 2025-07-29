@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [currentState, setCurrentState] = useState("Sign Up");
@@ -8,21 +9,28 @@ const LoginPage = () => {
   const [fullName, setFullName] = useState("");
   const [bio, setBio] = useState("");
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
+  const navigate = useNavigate();
 
-  const { loginUser } = useContext(AuthContext);
+  const { authUser, loginUser } = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentState === "Sign Up" && !isDataSubmitted) {
       setIsDataSubmitted(true);
+      if (authUser) {
+        navigate("/");
+        return;
+      }
       return;
     }
-    loginUser(currentState === "Sign Up" ? "signup" : "login", {
+    await loginUser(currentState === "Sign Up" ? "signup" : "login", {
       fullName,
       email,
       password,
       bio,
     });
+    // If login/signup is successful, redirect to home
+    navigate("/");
   };
 
   return (

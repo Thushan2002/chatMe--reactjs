@@ -14,7 +14,10 @@ const ProfilePage = () => {
     e.preventDefault();
     if (!selectedImage) {
       await updateProfile({ fullName: name, bio });
-      navigate("/");
+      if (authUser) {
+        navigate("/");
+      }
+      return;
     }
     const reader = new FileReader();
     reader.readAsDataURL(selectedImage);
@@ -72,10 +75,10 @@ const ProfilePage = () => {
           </button>
         </form>
         <img
-          src={assets.logo}
+          src={authUser?.profilePic || assets.logo}
           className={`${
             selectedImage && "rounded-full"
-          } w-1/3 max-sm:w-full h-full object-cover`}
+          } w-1/3 max-sm:w-full rounded-full aspect-square mx-6 h-full object-cover`}
           alt=""
         />
       </div>
