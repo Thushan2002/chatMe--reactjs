@@ -1,7 +1,3 @@
-
-
-
-
 import cloudinary from "../lib/cloudinary.js"
 import Message from "../models/MessageModel.js"
 import User from "../models/UserModel.js"
@@ -74,7 +70,6 @@ export const sendMessages = async (req, res) => {
         const { text, image } = req.body
         const { senderId } = req.params.id
         const receiverId = req.user._id
-
 
         let imageUrl;
         if (image) {
