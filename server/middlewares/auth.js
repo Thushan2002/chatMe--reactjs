@@ -10,13 +10,11 @@ export const protectedRoute = async (req, res, next) => {
         if (!token) {
             return res.json({ success: false, message: "No token provided" })
         }
-        console.log("token", token);
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         if (!decoded) {
             return res.json({ success: false, message: "Invalid token" })
         }
-        console.log("decode", decoded);
 
         const user = await User.findById({ _id: decoded.id }).select("-password")
         if (!user) {

@@ -1,22 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import assets, { imagesDummyData } from "../assets/assets";
+import { ChatContext } from "../context/ChatContext";
 
-const RightSidebar = ({ selectedChat }) => {
+const RightSidebar = ({ selectedUser }) => {
+  const {
+    messages,
+    users,
+    selectedUser,
+    getAllUsers,
+    setMessages,
+    sendMessages,
+    setSelectedUser,
+    unseenMessages,
+    setUnseenMessages,
+  } = useContext(ChatContext);
   return (
-    selectedChat && (
+    selectedUser && (
       <div className="bg-gradient-to-bl from-gray-900 to-black text-white w-full max-md:hidden p-4 overflow-y-auto">
         <div className="flex flex-col items-center gap-3">
           <img
-            src={selectedChat?.profilePic || assets.avatar_icon}
+            src={selectedUser?.profilePic || assets.avatar_icon}
             className="w-20 h-20 rounded-full"
             alt="profile"
           />
           <h2 className="text-xl font-medium flex items-center gap-2">
             <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-            {selectedChat.fullName}
+            {selectedUser.fullName}
           </h2>
           <p className="text-sm text-gray-400 text-center px-4">
-            {selectedChat.bio}
+            {selectedUser.bio}
           </p>
         </div>
 
