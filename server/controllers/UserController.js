@@ -42,15 +42,15 @@ export const logIn = async (req, res) => {
     try {
         const existingUser = await User.findOne({ email })
         if (!existingUser) {
-            res.json({ success: false, message: "User doesn't exists" })
+            return res.json({ success: false, message: "User doesn't exists" })
         }
         const isPasswordCorrect = await bcrypt.compare(password, existingUser?.password || "")
         if (!isPasswordCorrect) {
-            res.json({ success: false, message: "Password mismatched" })
+            return res.json({ success: false, message: "Password mismatched" })
         }
 
         const token = generateToken(existingUser?._id, res)
-        res.json({ success: true, token, existingUser, message: "Login Success" })
+        return res.json({ success: true, token, existingUser, message: "Login Success" })
     } catch (error) {
         console.log(`Error in Login Controller ${error}`);
         res.status(500).json({ error: "Internal Server Error" })
@@ -60,7 +60,7 @@ export const logIn = async (req, res) => {
 // check user authenticated ?
 
 export const checkAuth = (req, res) => {
-    res.json({ success: true, user: req.user })
+    return res.json({ success: true, user: req.user })
 }
 
 // update profile 
