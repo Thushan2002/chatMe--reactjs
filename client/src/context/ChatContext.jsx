@@ -28,7 +28,9 @@ export const ChatProvider = ({ children }) => {
   //   fetch messages for selected chat
   const getMessages = async () => {
     try {
-      const { data } = await axios.get(`/api/message/${userId}`);
+      const { data } = await axios.get(`/api/message/${selectedUser._id}`);
+      console.log("dat", data);
+
       if (data.success) {
         setMessages(data.messages);
       }
@@ -42,15 +44,27 @@ export const ChatProvider = ({ children }) => {
   const sendMessages = async (messageData) => {
     try {
       const { data } = await axios.post(
-        `/api/message/send/${selectedUser._id}`
+        `/api/message/send/${selectedUser._id}`,
+        messageData
       );
-      if (data.succes) {
+      console.log(
+        "Sending message to:",
+        `/api/message/send/${selectedUser._id}`,
+        messageData
+      );
+
+      if (data.success) {
         setMessages((prevMessages) => [...prevMessages, data.newMessage]);
+        console.log("msg:suc:", data);
       } else {
         toast.error(data.message);
+        console.log("msg:fail:", data);
       }
     } catch (error) {
+      console.log("🔥 Axios Error:", error);
+      console.log("selectedUser._id:", selectedUser?._id);
       toast.error(error.message);
+      console.log("poda");
     }
   };
 
@@ -89,7 +103,7 @@ export const ChatProvider = ({ children }) => {
     users,
     selectedUser,
     getAllUsers,
-    setMessages,
+    getMessages,
     sendMessages,
     setSelectedUser,
     unseenMessages,

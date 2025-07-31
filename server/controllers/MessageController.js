@@ -32,7 +32,7 @@ export const getUserForSidebar = async (req, res) => {
 
 export const fetchAllMessagesOfSelectedUser = async (req, res) => {
     try {
-        const { selectedId } = req.params
+        const selectedId = req.params.id
         const userId = req.user._id
 
         const messages = await Message.find({
@@ -68,8 +68,9 @@ export const markMessageAsSeen = async (req, res) => {
 export const sendMessages = async (req, res) => {
     try {
         const { text, image } = req.body
-        const { senderId } = req.params.id
-        const receiverId = req.user._id
+        const receiverId = req.params.id
+        const senderId = req.user._id
+
 
         let imageUrl;
         if (image) {
@@ -82,13 +83,14 @@ export const sendMessages = async (req, res) => {
             image: imageUrl,
             text
         })
+
         // emit the new message to the receiver's socket
         const receiverSocketId = userSocketMap[receiverId]
         if (receiverSocketId) {
             io.to(receiverSocketId).emit("newMessage", newMessage)
         }
 
-        res.json({ success: true, newMessage })
+        return res.json({ success: true, newMessage })
 
     } catch (error) {
         console.log(`Error in sendMessages Controller ${error}`);
