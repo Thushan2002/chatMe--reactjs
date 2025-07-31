@@ -3,17 +3,31 @@ import assets, { userDummyData } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { ChatContext } from "../context/ChatContext";
 
-const Sidebar = ({ selectedChat, setSelectedChat }) => {
-  const { logoutUser } = useContext(AuthContext);
+const Sidebar = () => {
+  const { logoutUser, onlineUsers } = useContext(AuthContext);
+  const { users, selectedUser, getAllUsers, setSelectedUser, unseenMessages } =
+    useContext(ChatContext);
   const navigate = useNavigate();
   const [openProfile, setOpenProfile] = useState(false);
   const profileRef = useRef();
+  const [input, setInput] = useState("");
+
+  const filteredUsers = input
+    ? users.filter((user) =>
+        user.fullName.toLowerCase().includes(input.toLocaleLowerCase())
+      )
+    : users;
+
+  useEffect(() => {
+    getAllUsers();
+  }, [onlineUsers]);
 
   return (
     <div
       className={`bg-gradient-to-b from-gray-800 to-black h-full text-white p-5 ${
-        selectedChat ? "max-md:hidden" : ""
+        selectedUser ? "max-md:hidden" : ""
       }`}>
       {/* Header */}
       <div className="flex justify-between items-center mb-5">
@@ -51,6 +65,7 @@ const Sidebar = ({ selectedChat, setSelectedChat }) => {
       <div className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-2 mb-4">
         <img src={assets.search_icon} alt="search" className="w-3" />
         <input
+          onChange={(e) => setInput(e.target.value)}
           type="text"
           placeholder="Search chats"
           className="bg-transparent outline-none text-sm placeholder-white/50 w-full"
@@ -59,12 +74,12 @@ const Sidebar = ({ selectedChat, setSelectedChat }) => {
 
       {/* Chat List */}
       <div className="space-y-3">
-        {userDummyData.map((user, index) => (
+        {filteredUsers.map((user, index) => (
           <div
             key={user._id}
-            onClick={() => setSelectedChat(user)}
+            onClick={() => setSelectedUser(user)}
             className={`flex items-center gap-3 p-2 border-b border-white/10 rounded-lg cursor-pointer hover:bg-white/10 ${
-              selectedChat?._id === user._id ? "bg-white/10" : ""
+              selectedUser?._id === user._id ? "bg-white/10" : ""
             }`}>
             <img
               src={user.profilePic || assets.avatar_icon}
@@ -75,19 +90,22 @@ const Sidebar = ({ selectedChat, setSelectedChat }) => {
               <p className="font-medium">{user.fullName}</p>
               <span
                 className={`${
-                  index < 3 ? "text-green-400" : "text-gray-400"
+                  onlineUsers.includes(user._id)
+                    ? "text-green-400"
+                    : "text-gray-400"
                 } text-xs`}>
                 {index < 3 ? "Online" : "Offline"}
               </span>
             </div>
-            {index > 2 && (
+            {unseenMessages[user._id] > 0 && (
               <div className="ml-auto w-5 h-5 bg-indigo-600 text-xs flex items-center justify-center rounded-full">
-                {index}
+                {unseenMessages[user._id]}
               </div>
             )}
           </div>
         ))}
       </div>
+      <button onClick={() => console.log(selectedUser)}>print</button>
     </div>
   );
 };
