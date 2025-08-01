@@ -29,14 +29,17 @@ const ChatContainer = () => {
       toast.error("select an Image file");
       return;
     }
+    console.log("file", file);
 
     const reader = new FileReader();
     reader.onloadend = async () => {
       await sendMessages({ image: reader.result });
       e.target.value = "";
     };
+
     reader.readAsDataURL(file);
   };
+
   useEffect(() => {
     if (selectedUser) {
       getMessages(selectedUser._id);
