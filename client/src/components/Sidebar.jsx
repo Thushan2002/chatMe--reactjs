@@ -7,8 +7,14 @@ import { ChatContext } from "../context/ChatContext";
 
 const Sidebar = () => {
   const { logoutUser, onlineUsers } = useContext(AuthContext);
-  const { users, selectedUser, getAllUsers, setSelectedUser, unseenMessages } =
-    useContext(ChatContext);
+  const {
+    users,
+    selectedUser,
+    getAllUsers,
+    setSelectedUser,
+    unseenMessages,
+    setUnseenMessages,
+  } = useContext(ChatContext);
   const navigate = useNavigate();
   const [openProfile, setOpenProfile] = useState(false);
   const profileRef = useRef();
@@ -77,7 +83,10 @@ const Sidebar = () => {
         {filteredUsers.map((user, index) => (
           <div
             key={user._id}
-            onClick={() => setSelectedUser(user)}
+            onClick={() => {
+              setSelectedUser(user);
+              setUnseenMessages((prev) => ({ ...prev, [user._id]: 0 }));
+            }}
             className={`flex items-center gap-3 p-2 border-b border-white/10 rounded-lg cursor-pointer hover:bg-white/10 ${
               selectedUser?._id === user._id ? "bg-white/10" : ""
             }`}>
