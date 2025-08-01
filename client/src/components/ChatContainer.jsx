@@ -18,7 +18,6 @@ const ChatContainer = () => {
     e.preventDefault();
     if (input.trim() === "") return null;
     await sendMessages({ text: input.trim() });
-    console.log("Sending message:", { text: input.trim() });
     setInput("");
   };
 
@@ -48,7 +47,6 @@ const ChatContainer = () => {
     if (scrollEnd.current && messages) {
       scrollEnd.current.scrollIntoView({ behavior: "smooth" });
     }
-    console.log("msgs", messages);
   }, [messages]);
 
   return selectedUser ? (

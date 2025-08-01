@@ -79,28 +79,38 @@ export const AuthProvider = ({ children }) => {
   };
 
   //   connect to socket.io server
+
   const connectSocket = (userData) => {
     if (!userData || socket?.connected) return;
+
     const newSocket = io(backendUrl, {
       query: { userId: userData._id },
     });
-    newSocket.connect();
-    setSocket(newSocket);
+
     newSocket.on("getOnlineUsers", (usersIds) => {
       setOnlineUsers(usersIds);
     });
+
+    setSocket(newSocket);
   };
 
   useEffect(() => {
     if (token) {
       setLoading(true);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      checkAuth();
+      checkAuth(); // sets authUser
+    } else {
+      setLoading(false);
     }
+  }, [token]);
 
-    connectSocket(authUser);
-    setLoading(false);
-  }, []);
+  // now connect socket when authUser is ready
+  useEffect(() => {
+    if (authUser) {
+      connectSocket(authUser);
+    }
+  }, [authUser]);
+
   const value = {
     axios,
     token,
