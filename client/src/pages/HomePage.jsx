@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Sidebar from "../components/Sidebar";
 import ChatContainer from "../components/ChatContainer";
-// import RightSidebar from "../components/RightSidebar";
+import { ChatContext } from "../context/ChatContext";
+import RightSidebar from "../components/RightSidebar";
 
 const HomePage = () => {
-  const [selectedUser, setSelectedUser] = useState(null);
+  const { selectedUser, setSelectedUser } = useContext(ChatContext);
 
   return (
     <div className="border w-full h-screen">
@@ -14,10 +15,7 @@ const HomePage = () => {
         }`}>
         <Sidebar />
         <ChatContainer />
-        {/* <RightSidebar
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
-        /> */}
+        <RightSidebar />
       </div>
     </div>
   );
