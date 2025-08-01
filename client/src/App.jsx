@@ -8,8 +8,7 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 
 const App = () => {
-  const { authUser } = useContext(AuthContext);
-  console.log("authUser", authUser);
+  const { authUser, onlineUsers } = useContext(AuthContext);
 
   return (
     <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-black text-white">

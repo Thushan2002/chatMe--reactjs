@@ -94,7 +94,7 @@ const Sidebar = () => {
                     ? "text-green-400"
                     : "text-gray-400"
                 } text-xs`}>
-                {index < 3 ? "Online" : "Offline"}
+                {onlineUsers.includes(user._id) ? "Online" : "Offline"}
               </span>
             </div>
             {unseenMessages[user._id] > 0 && (
@@ -105,7 +105,6 @@ const Sidebar = () => {
           </div>
         ))}
       </div>
-      <button onClick={() => console.log(selectedUser)}>print</button>
     </div>
   );
 };

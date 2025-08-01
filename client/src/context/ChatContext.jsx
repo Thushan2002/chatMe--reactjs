@@ -29,7 +29,6 @@ export const ChatProvider = ({ children }) => {
   const getMessages = async () => {
     try {
       const { data } = await axios.get(`/api/message/${selectedUser._id}`);
-      console.log("dat", data);
 
       if (data.success) {
         setMessages(data.messages);
@@ -47,24 +46,14 @@ export const ChatProvider = ({ children }) => {
         `/api/message/send/${selectedUser._id}`,
         messageData
       );
-      console.log(
-        "Sending message to:",
-        `/api/message/send/${selectedUser._id}`,
-        messageData
-      );
 
       if (data.success) {
         setMessages((prevMessages) => [...prevMessages, data.newMessage]);
-        console.log("msg:suc:", data);
       } else {
         toast.error(data.message);
-        console.log("msg:fail:", data);
       }
     } catch (error) {
-      console.log("🔥 Axios Error:", error);
-      console.log("selectedUser._id:", selectedUser?._id);
       toast.error(error.message);
-      console.log("poda");
     }
   };
 
